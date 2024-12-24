@@ -1,38 +1,58 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+`nginx_install` is an Ansible role for installing and configuring the NGINX web server on Ubuntu-based systems.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- The target machine should be running Ubuntu (or a compatible Debian-based distribution).
+- Ansible must be installed on the control node.
+- SSH access to the target machine with a valid private key.
 
+  
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables can be configured to customize the role:
+
+| Variable                | Default Value | Description                          |
+|-------------------------|---------------|--------------------------------------|
+| `nginx_state`           | `present`     | Whether to install or remove NGINX.  |
+| `nginx_service_state`   | `started`     | Desired state of the NGINX service.  |
+| `nginx_service_enabled` | `yes`         | Whether to enable NGINX at boot.     |
+
+To override these variables, define them in your playbook or an external vars file.
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role does not have any external dependencies.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here’s an example playbook using this role:
+.yaml file
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+---
+- name: Install and Configure NGINX
+  hosts: nginx_servers
+  vars:
+    nginx_state: present
+    nginx_service_state: started
+    nginx_service_enabled: yes
+  roles:
+    - nginx_install
+
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created by Jitendra, as part of an Ansible automation project to install and manage NGINX on EC2 instances.
